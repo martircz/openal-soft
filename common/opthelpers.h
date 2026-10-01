@@ -62,7 +62,10 @@
 #define LIFETIMEBOUND
 #endif
 
-#if HAS_ATTRIBUTE(clang::nonblocking)
+/* The MSVC STL's std::ranges algorithms reject member function pointers
+ * carrying the attribute (clang-cl), so it is left out there.
+ */
+#if HAS_ATTRIBUTE(clang::nonblocking) && !defined(_MSVC_STL_VERSION)
 #define NONBLOCKING [[clang::nonblocking]]
 #else
 #define NONBLOCKING
